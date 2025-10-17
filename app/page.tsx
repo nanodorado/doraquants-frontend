@@ -1,100 +1,113 @@
-import Image from "next/image";
+import ChartExample from './components/ChartExample';
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="min-h-screen p-8">
+      {/* Header */}
+      <header className="mb-12">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            <span className="gradient-text">Doraquants</span>
+          </h1>
+          <p className="text-gray-300 text-lg md:text-xl max-w-2xl">
+            AI-driven analytics and portfolio intelligence for modern traders
+          </p>
+        </div>
+      </header>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          {/* Portfolio Overview */}
+          <div className="glass-effect rounded-lg p-6">
+            <h2 className="text-2xl font-semibold mb-4 text-white">Portfolio Overview</h2>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <span className="text-gray-300">Total Value</span>
+                <span className="text-2xl font-bold text-green-400">$22,000.00</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-300">24h Change</span>
+                <span className="text-lg font-semibold text-green-400">+5.2%</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-300">Active Positions</span>
+                <span className="text-lg font-semibold text-blue-400">8</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Stats */}
+          <div className="glass-effect rounded-lg p-6">
+            <h2 className="text-2xl font-semibold mb-4 text-white">Quick Stats</h2>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-blue-400">BTC</div>
+                <div className="text-gray-300">$45,230</div>
+                <div className="text-green-400 text-sm">+2.1%</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-purple-400">ETH</div>
+                <div className="text-gray-300">$2,890</div>
+                <div className="text-red-400 text-sm">-0.8%</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-yellow-400">BNB</div>
+                <div className="text-gray-300">$325</div>
+                <div className="text-green-400 text-sm">+1.5%</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-pink-400">SOL</div>
+                <div className="text-gray-300">$125</div>
+                <div className="text-green-400 text-sm">+4.2%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Chart Section */}
+        <div className="mb-12">
+          <h2 className="text-3xl font-semibold mb-6 text-white">Performance Analytics</h2>
+          <ChartExample />
+        </div>
+
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <div className="glass-effect rounded-lg p-6 text-center">
+            <div className="w-12 h-12 bg-blue-500 rounded-lg mx-auto mb-4 flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold mb-2 text-white">Real-time Analytics</h3>
+            <p className="text-gray-300">Advanced market analysis with AI-powered insights</p>
+          </div>
+          
+          <div className="glass-effect rounded-lg p-6 text-center">
+            <div className="w-12 h-12 bg-purple-500 rounded-lg mx-auto mb-4 flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold mb-2 text-white">Lightning Fast</h3>
+            <p className="text-gray-300">Execute trades with minimal latency and maximum precision</p>
+          </div>
+          
+          <div className="glass-effect rounded-lg p-6 text-center">
+            <div className="w-12 h-12 bg-green-500 rounded-lg mx-auto mb-4 flex items-center justify-center">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold mb-2 text-white">Secure & Reliable</h3>
+            <p className="text-gray-300">Bank-grade security with 99.9% uptime guarantee</p>
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      {/* Footer */}
+      <footer className="max-w-7xl mx-auto mt-16 pt-8 border-t border-gray-700 text-center text-gray-400">
+        <p>&copy; 2024 Doraquants. All rights reserved.</p>
       </footer>
     </div>
   );
