@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Portfolio, Trade, Kline, getPortfolio, getTrades, getMarketData, healthCheck } from '@/lib/api';
 
 // Hook for portfolio data
@@ -35,7 +35,9 @@ export function useTrades(symbol: string, limit: number = 50) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchTrades = async () => {
+  const fetchTrades = useCallback(async () => {
+    if (!symbol) return;
+    
     try {
       setLoading(true);
       setError(null);
@@ -43,16 +45,15 @@ export function useTrades(symbol: string, limit: number = 50) {
       setTrades(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch trades');
+      setTrades([]); // Clear trades on error
     } finally {
       setLoading(false);
     }
-  };
+  }, [symbol, limit]);
 
   useEffect(() => {
-    if (symbol) {
-      fetchTrades();
-    }
-  }, [symbol, limit]);
+    fetchTrades();
+  }, [fetchTrades]);
 
   return { trades, loading, error, refetch: fetchTrades };
 }
@@ -63,7 +64,9 @@ export function useMarketData(symbol: string, interval: string = '1h', limit: nu
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchMarketData = async () => {
+  const fetchMarketData = useCallback(async () => {
+    if (!symbol) return;
+
     try {
       setLoading(true);
       setError(null);
@@ -71,16 +74,15 @@ export function useMarketData(symbol: string, interval: string = '1h', limit: nu
       setMarketData(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch market data');
+      setMarketData([]); // Clear data on error
     } finally {
       setLoading(false);
     }
-  };
+  }, [symbol, interval, limit]);
 
   useEffect(() => {
-    if (symbol) {
-      fetchMarketData();
-    }
-  }, [symbol, interval, limit]);
+    fetchMarketData();
+  }, [fetchMarketData]);
 
   return { marketData, loading, error, refetch: fetchMarketData };
 }

@@ -172,7 +172,7 @@ export async function getPrices(symbols?: string[]): Promise<{ [symbol: string]:
 /**
  * Get exchange information
  */
-export async function getExchangeInfo(): Promise<any> {
+export async function getExchangeInfo(): Promise<unknown> {
   try {
     const data = await apiRequest('/api/binance/exchange-info');
     return data;
