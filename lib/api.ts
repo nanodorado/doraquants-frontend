@@ -4,17 +4,26 @@ const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 // Types for API responses
 export interface Position {
-  symbol: string;
-  side: 'BUY' | 'SELL';
-  size: string;
-  markPrice: string;
-  entryPrice: string;
-  percentage: string;
-  unrealizedProfit: string;
+  asset: string;
+  free: number;
+  locked: number;
+  total: number;
+  priceUSDT: number;
+  valueUSDT: number;
+  pct: number;
+}
+
+export interface PortfolioResponse {
+  status: string;
+  testnet: boolean;
+  totalUSDT: number;
+  positions: Position[];
+  positionCount: number;
+  timestamp: string;
 }
 
 export interface Portfolio {
-  totalUSDT: string;
+  totalUSDT: number;
   positions: Position[];
 }
 
@@ -95,8 +104,16 @@ async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promi
  */
 export async function getPortfolio(): Promise<Portfolio> {
   try {
-    const data = await apiRequest<Portfolio>('/api/binance/portfolio');
-    return data;
+    const data = await apiRequest<PortfolioResponse>('/api/binance/portfolio');
+    console.log("Portfolio data:", data);
+    
+    // Transform backend response to frontend format
+    const portfolio: Portfolio = {
+      totalUSDT: data.totalUSDT || 0,
+      positions: Array.isArray(data.positions) ? data.positions : []
+    };
+    
+    return portfolio;
   } catch (error) {
     console.error('Error fetching portfolio:', error);
     throw new Error(`Failed to fetch portfolio: ${error instanceof Error ? error.message : 'Unknown error'}`);

@@ -117,7 +117,7 @@ export default function Dashboard() {
           <h2 className="text-2xl font-semibold mb-4 text-white">Portfolio</h2>
           <div className="text-red-400 text-center py-8">
             <div className="text-4xl mb-2">⚠️</div>
-            <div>Failed to load portfolio</div>
+            <div>Error loading portfolio data</div>
             <div className="text-sm text-gray-400 mt-2">{portfolioError}</div>
             <button 
               onClick={refetchPortfolio}
@@ -130,7 +130,7 @@ export default function Dashboard() {
       );
     }
 
-    if (!portfolio) {
+    if (!portfolio || typeof portfolio.totalUSDT === 'undefined') {
       return (
         <div className="glass-effect rounded-lg p-6">
           <h2 className="text-2xl font-semibold mb-4 text-white">Portfolio</h2>
@@ -147,7 +147,7 @@ export default function Dashboard() {
         <div className="mb-6">
           <div className="text-gray-300 text-sm">Total Value</div>
           <div className="text-3xl font-bold text-green-400">
-            {formatPrice(portfolio.totalUSDT)}
+            {formatPrice(portfolio.totalUSDT.toString())}
           </div>
         </div>
 
@@ -157,21 +157,21 @@ export default function Dashboard() {
             <thead>
               <tr className="border-b border-gray-600">
                 <th className="text-left text-gray-300 py-2">Asset</th>
-                <th className="text-right text-gray-300 py-2">Free</th>
+                <th className="text-right text-gray-300 py-2">Balance</th>
                 <th className="text-right text-gray-300 py-2">Value USDT</th>
                 <th className="text-right text-gray-300 py-2">%</th>
               </tr>
             </thead>
             <tbody>
-              {portfolio.positions && portfolio.positions.length > 0 ? (
+              {Array.isArray(portfolio.positions) && portfolio.positions.length > 0 ? (
                 portfolio.positions.map((position, index) => (
-                  <tr key={index} className="border-b border-gray-700">
-                    <td className="py-2 text-white font-medium">{position.symbol}</td>
-                    <td className="py-2 text-right text-gray-300">{position.size}</td>
-                    <td className="py-2 text-right text-gray-300">{formatPrice(position.markPrice)}</td>
+                  <tr key={`${position.asset}-${index}`} className="border-b border-gray-700">
+                    <td className="py-2 text-white font-medium">{position.asset}</td>
+                    <td className="py-2 text-right text-gray-300">{position.total.toFixed(6)}</td>
+                    <td className="py-2 text-right text-gray-300">{formatPrice(position.valueUSDT.toString())}</td>
                     <td className="py-2 text-right">
-                      <span className={`${parseFloat(position.percentage) >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                        {position.percentage}%
+                      <span className="text-green-400">
+                        {position.pct.toFixed(2)}%
                       </span>
                     </td>
                   </tr>

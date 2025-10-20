@@ -14,8 +14,25 @@ export function usePortfolio() {
       setLoading(true);
       setError(null);
       const data = await getPortfolio();
+      console.log("Portfolio hook received data:", data);
+      
+      // Validate data structure
+      if (!data) {
+        throw new Error('No portfolio data received');
+      }
+      
+      if (typeof data.totalUSDT !== 'number') {
+        console.warn('Portfolio totalUSDT is not a number:', data.totalUSDT);
+      }
+      
+      if (!Array.isArray(data.positions)) {
+        console.warn('Portfolio positions is not an array:', data.positions);
+        data.positions = [];
+      }
+      
       setPortfolio(data);
     } catch (err) {
+      console.error('Portfolio fetch error:', err);
       setError(err instanceof Error ? err.message : 'Failed to fetch portfolio');
     } finally {
       setLoading(false);
