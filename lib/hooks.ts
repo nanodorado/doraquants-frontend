@@ -15,6 +15,8 @@ export function usePortfolio() {
       setError(null);
       const data = await getPortfolio();
       console.log("Portfolio hook received data:", data);
+      console.log("typeof data:", typeof data);
+      console.log("Array.isArray(data):", Array.isArray(data));
       
       // Validate data structure
       if (!data) {
@@ -30,6 +32,7 @@ export function usePortfolio() {
         data.positions = [];
       }
       
+      console.log("Setting portfolio state with:", data);
       setPortfolio(data);
     } catch (err) {
       console.error('Portfolio fetch error:', err);
@@ -43,6 +46,7 @@ export function usePortfolio() {
     fetchPortfolio();
   }, []);
 
+  console.log("usePortfolio returning:", { portfolio, loading, error });
   return { portfolio, loading, error, refetch: fetchPortfolio };
 }
 

@@ -95,6 +95,10 @@ export default function Dashboard() {
 
   // Portfolio Card Component
   const PortfolioCard = () => {
+    console.log("PortfolioCard rendering with:", { portfolio, portfolioLoading, portfolioError });
+    console.log("typeof portfolio:", typeof portfolio);
+    console.log("Array.isArray(portfolio):", Array.isArray(portfolio));
+    
     if (portfolioLoading) {
       return (
         <div className="glass-effect rounded-lg p-6">
@@ -260,7 +264,7 @@ export default function Dashboard() {
       );
     }
 
-    if (!marketData || marketData.length === 0) {
+    if (!marketData || !Array.isArray(marketData) || marketData.length === 0) {
       return (
         <div className="glass-effect rounded-lg p-6 h-96">
           <div className="flex items-center justify-center h-full">
@@ -269,6 +273,10 @@ export default function Dashboard() {
         </div>
       );
     }
+
+    console.log("marketData for chart:", marketData);
+    console.log("typeof marketData:", typeof marketData);
+    console.log("Array.isArray(marketData):", Array.isArray(marketData));
 
     const sortedData = [...marketData].sort((a, b) => a.openTime - b.openTime);
     
@@ -342,7 +350,7 @@ export default function Dashboard() {
               </tr>
             </thead>
             <tbody>
-              {trades && trades.length > 0 ? (
+              {Array.isArray(trades) && trades.length > 0 ? (
                 trades.map((trade, index) => (
                   <tr key={trade.id || index} className="border-b border-gray-700">
                     <td className="py-2 text-white font-medium">{trade.symbol}</td>

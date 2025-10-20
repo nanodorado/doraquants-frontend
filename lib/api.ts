@@ -139,6 +139,16 @@ export async function getMarketData(
     });
 
     const data = await apiRequest<Kline[]>(`/api/binance/market-data?${params}`);
+    console.log("Market data received:", data);
+    console.log("typeof marketData:", typeof data);
+    console.log("Array.isArray(marketData):", Array.isArray(data));
+    
+    // Ensure we always return an array
+    if (!Array.isArray(data)) {
+      console.warn('Market data is not an array, returning empty array');
+      return [];
+    }
+    
     return data;
   } catch (error) {
     console.error('Error fetching market data:', error);
@@ -162,6 +172,16 @@ export async function getTrades(
     });
 
     const data = await apiRequest<Trade[]>(`/api/binance/trades?${params}`);
+    console.log("Trades data received:", data);
+    console.log("typeof trades:", typeof data);
+    console.log("Array.isArray(trades):", Array.isArray(data));
+    
+    // Ensure we always return an array
+    if (!Array.isArray(data)) {
+      console.warn('Trades data is not an array, returning empty array');
+      return [];
+    }
+    
     return data;
   } catch (error) {
     console.error('Error fetching trades:', error);
