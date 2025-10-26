@@ -64,8 +64,8 @@ async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promi
     ...(options.headers as Record<string, string>),
   };
 
-  // Add API key if available
-  if (API_KEY) {
+  // Add API key if available (optional for development)
+  if (API_KEY && API_KEY !== 'your_api_key_here') {
     headers['x-api-key'] = API_KEY;
   }
 
@@ -235,5 +235,6 @@ export async function healthCheck(): Promise<{ status: string; timestamp: number
 // Export API configuration for debugging
 export const apiConfig = {
   baseUrl: API_BASE_URL,
-  hasApiKey: !!API_KEY,
+  hasApiKey: !!(API_KEY && API_KEY !== 'your_api_key_here'),
+  apiKey: API_KEY ? (API_KEY === 'your_api_key_here' ? 'NOT_SET' : 'SET') : 'UNDEFINED',
 };
